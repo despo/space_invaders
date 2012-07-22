@@ -10,17 +10,13 @@ class SpaceInvader
 
 class Painter
   constructor: ->
-    @setup_context()
     @color = '#ffffff'
+    @setup_context()
     @setup_invaders()
 
   setup_context: ->
     canvas = document.getElementById "invaders"
     @context = canvas.getContext "2d"
-
-  draw_invaders: ->
-    for pos in [0...@invaders.length]
-      @invaders[pos].draw(@context)
 
   setup_invaders: ->
     @invaders = []
@@ -28,6 +24,10 @@ class Painter
       for y in [0..5]
         invader = new SpaceInvader(x*100, y*50)
         @invaders.push invader
+
+  draw_invaders: ->
+    for pos in [0...@invaders.length]
+      @invaders[pos].draw(@context)
 
 jQuery = $
 $(document).ready ->
