@@ -2,7 +2,7 @@ class SpaceInvader
   constructor:(initial_x, initial_y) ->
     @x = initial_x
     @y = initial_y
-    @color = "#00FFFF"
+    @color = "#FFFF66"
 
   draw:(context) ->
     context.fillStyle = @color
@@ -12,7 +12,6 @@ class Painter
   constructor: ->
     @setup_context()
     @color = '#ffffff'
-    @invaders = []
     @setup_invaders()
 
   setup_context: ->
@@ -24,6 +23,7 @@ class Painter
       @invaders[pos].draw(@context)
 
   setup_invaders: ->
+    @invaders = []
     for x in [1...6]
       for y in [0..5]
         invader = new SpaceInvader(x*100, y*50)
