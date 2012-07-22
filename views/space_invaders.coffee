@@ -3,6 +3,8 @@ class SpaceInvader
     @x = initial_x
     @y = initial_y
     @color = "#FFFF66"
+    @state = "right"
+    @repetition = 0
 
   draw:(context) ->
     context.fillStyle = @color
@@ -10,10 +12,34 @@ class SpaceInvader
 
   animate:(context) ->
     @timeout = setTimeout (=>
-      @x = @x+10
+      @transition_state()
       @draw(context)
     ),
     0
+
+  transition_state: ->
+    if @state == "right"
+      @vstate = "right"
+      @x = @x+10
+      if @repetition < 6
+        @repetition++
+      else
+        @state = "down"
+        @repetition = 0
+    else if @state == "down"
+      @y = @y+10
+      if @vstate == "right"
+        @state = "left"
+      else if @vstate == "left"
+        @state = "right"
+    else if @state == "left"
+      @vstate = "left"
+      @x = @x-10
+      if @repetition < 6
+        @repetition++
+      else
+        @state = "down"
+        @repetition = 0
 
 class Painter
   constructor: ->
@@ -30,7 +56,7 @@ class Painter
 
   setup_invaders: ->
     @invaders = []
-    for x in [1...6]
+    for x in [1...7]
       for y in [0..5]
         invader = new SpaceInvader(x*100, y*50)
         @invaders.push invader
@@ -46,7 +72,7 @@ class Painter
         @invaders[pos].animate(@context)
       @animate()
       ),
-      2000
+      1000
 
 jQuery = $
 $(document).ready ->
