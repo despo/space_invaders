@@ -10,20 +10,21 @@ class SpaceInvader
 
 class Painter
   constructor: ->
-    @canvas = document.getElementById "invaders"
-    @width = @canvas.width
-    @height = @canvas.height
-    @context = @canvas.getContext "2d"
+    @setup_context()
     @color = '#ffffff'
     @invaders = []
     @setup_invaders()
+
+  setup_context: ->
+    canvas = document.getElementById "invaders"
+    @context = canvas.getContext "2d"
 
   draw_invaders: ->
     for pos in [0...@invaders.length]
       @invaders[pos].draw(@context)
 
   setup_invaders: ->
-    for x in [1...5]
+    for x in [1...6]
       for y in [0..5]
         invader = new SpaceInvader(x*100, y*50)
         @invaders.push invader
