@@ -8,15 +8,25 @@ class SpaceInvader
     context.fillStyle = @color
     context.fillRect @x, @y, 50, 30
 
+  animate:(context) ->
+    @timeout = setTimeout (=>
+      @x = @x+10
+      @draw(context)
+    ),
+    0
+
 class Painter
   constructor: ->
     @color = '#ffffff'
     @setup_context()
     @setup_invaders()
 
+  clear: ->
+    @canvas.width = @canvas.width
+
   setup_context: ->
-    canvas = document.getElementById "invaders"
-    @context = canvas.getContext "2d"
+    @canvas = document.getElementById "invaders"
+    @context = @canvas.getContext "2d"
 
   setup_invaders: ->
     @invaders = []
@@ -29,7 +39,17 @@ class Painter
     for pos in [0...@invaders.length]
       @invaders[pos].draw(@context)
 
+  animate: ->
+    @timeout = setTimeout (=>
+      @clear()
+      for pos in [0...@invaders.length]
+        @invaders[pos].animate(@context)
+      @animate()
+      ),
+      2000
+
 jQuery = $
 $(document).ready ->
   painter = new Painter
   painter.draw_invaders()
+  painter.animate()
