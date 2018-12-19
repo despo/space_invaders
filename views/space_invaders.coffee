@@ -20,7 +20,7 @@ class SpaceInvader
     image
 
   draw:(context) ->
-    context.drawImage(@image(), @x, @y, 50, 30)
+    context.drawImage(@image(), @x, @y, 35, 20)
 
   animate:(context) ->
     @timeout = setTimeout (=>
@@ -34,13 +34,13 @@ class SpaceInvader
     if @state == "right"
       @vstate = "right"
       @x = @x+10
-      if @repetition < 6
+      if @repetition < 22
         @repetition++
       else
         @state = "down"
         @repetition = 0
     else if @state == "down"
-      @y = @y+10
+      @y = @y+20
       if @vstate == "right"
         @state = "left"
       else if @vstate == "left"
@@ -48,7 +48,7 @@ class SpaceInvader
     else if @state == "left"
       @vstate = "left"
       @x = @x-10
-      if @repetition < 6
+      if @repetition < 22
         @repetition++
       else
         @state = "down"
@@ -69,9 +69,9 @@ class Painter
 
   setup_invaders: ->
     @invaders = []
-    for x in [1...7]
-      for y in [0..5]
-        invader = new SpaceInvader(x*100, y*50)
+    for x in [1...12]
+      for y in [0..4]
+        invader = new SpaceInvader(x*60, y*40)
         @invaders.push invader
 
   draw_invaders: ->
