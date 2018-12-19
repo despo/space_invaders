@@ -5,10 +5,23 @@ class SpaceInvader
     @color = "#FFFF66"
     @state = "right"
     @repetition = 0
+    @odd = true
+
+  image: ->
+    @current_image = @still_state()
+    @current_image
+
+  still_state: ->
+    image = new Image()
+    if @odd == true
+      image.src = 'images/invader-2.png'
+    else
+      image.src = 'images/invader-3.png'
+    image
 
   draw:(context) ->
-    context.fillStyle = @color
     context.fillRect @x, @y, 50, 30
+    context.drawImage(@image(), @x, @y, 50, 30)
 
   animate:(context) ->
     @timeout = setTimeout (=>
@@ -18,6 +31,7 @@ class SpaceInvader
     0
 
   transition_state: ->
+    @odd = !@odd
     if @state == "right"
       @vstate = "right"
       @x = @x+10
